@@ -1,10 +1,21 @@
 package com.nhnacademy.exchange;
 
-public interface Money {
+public class Money {
+    private double amount;
 
-    double getAmount();
+    public Money(){
+        this.amount = 0.0;
+    }
 
-    void addAmount(Money money);
+    public double getAmount(){
+        return this.amount;
+    }
 
-    void subAmount(Money money);
+    public void addAmount(Money money){
+        this.amount += money.getAmount();
+    }
+
+    public void subAmount(Money money){
+        this.amount -= money.getAmount();
+    }
 }
