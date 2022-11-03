@@ -5,49 +5,49 @@ import com.nhnacademy.exchange.exception.NegativeAmountException;
 import com.nhnacademy.exchange.exception.NoMatchCurrencyException;
 import java.util.Objects;
 
-public class Money {
+public class Money{
     private double amount;
     private String currency;
 
-    public Money(double amount, String currency) {
-        try {
+    public Money(double amount, String currency){
+        try{
             Currency.valueOf(currency);
-        } catch (IllegalArgumentException e) {
+        }catch(IllegalArgumentException e){
             throw new IncorrectCurrencyException(currency);
         }
         this.amount = amount;
         this.currency = currency;
     }
 
-    public double getAmount() {
+    public double getAmount(){
         return this.amount;
     }
 
-    public String getCurrency() {
+    public String getCurrency(){
         return currency;
     }
 
-    public void addAmount(Money money) {
-
-        if (!Objects.equals(this.currency, money.getCurrency())) {
-            throw new NoMatchCurrencyException(this.currency, money.getCurrency());
-        }
+    public void addAmount(Money money){
+        currencyCheck(money);
         this.amount += money.getAmount();
-        if(Currency.valueOf(this.currency) != null){
-            this.amount = Math.round(this.amount * 100)/100;
-        }
+        roundAmount();
     }
 
-    public void subAmount(Money money) {
-        if (!Objects.equals(this.currency, money.getCurrency())) {
-            throw new NoMatchCurrencyException(this.currency, money.getCurrency());
-        }
+    public void subAmount(Money money){
+        currencyCheck(money);
         if(this.amount - money.getAmount() < 0){
             throw new NegativeAmountException(this.amount-money.getAmount());
         }
         this.amount -= money.getAmount();
-        if(Currency.valueOf(this.currency) != null){
-            this.amount = Math.round(this.amount * 100)/100;
+        roundAmount();
+    }
+
+    private void roundAmount(){
+        this.amount = Math.round(this.amount * 100)/100;
+    }
+    private void currencyCheck(Money money){
+        if(!Objects.equals(this.currency, money.getCurrency())){
+            throw new NoMatchCurrencyException(this.currency, money.getCurrency());
         }
     }
 
@@ -55,7 +55,7 @@ public class Money {
         this.currency = currency;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(double amount){
         this.amount = amount;
     }
 }
