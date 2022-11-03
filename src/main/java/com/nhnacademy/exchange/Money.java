@@ -1,5 +1,8 @@
 package com.nhnacademy.exchange;
 
 public interface Money {
-    Double add(Money money1, Money money2);
+
+    double getAmount();
+
+    void addAmount(Money money2);
 }

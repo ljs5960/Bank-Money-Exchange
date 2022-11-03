@@ -1,11 +1,16 @@
 package com.nhnacademy.exchange;
 
 public class Won implements Money {
-    private Double amount = 0.0;
+    private double amount = 0.0;
     private String currency = "krw";
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
+    }
+
+    @Override
+    public void addAmount(Money money) {
+        this.amount += money.getAmount();
     }
 
     public void setAmount(Double amount) {
@@ -16,8 +21,4 @@ public class Won implements Money {
         this.amount = amount;
     }
 
-    @Override
-    public Double add(Money money1, Money money2) {
-        return null;
-    }
 }
