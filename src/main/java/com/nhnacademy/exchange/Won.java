@@ -13,6 +13,11 @@ public class Won implements Money {
         this.amount += money.getAmount();
     }
 
+    @Override
+    public void subAmount(Money money) {
+        this.amount -= money.getAmount();
+    }
+
     public void setAmount(Double amount) {
         this.amount = amount;
     }
