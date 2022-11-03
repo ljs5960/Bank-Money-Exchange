@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Money {
     private double amount;
-    private final String currency;
+    private String currency;
 
     public Money(double amount, String currency) {
         try {
@@ -33,6 +33,9 @@ public class Money {
             throw new NoMatchCurrencyException(this.currency, money.getCurrency());
         }
         this.amount += money.getAmount();
+        if(Currency.valueOf(this.currency) != null){
+            this.amount = Math.round(this.amount * 100)/100;
+        }
     }
 
     public void subAmount(Money money) {
@@ -43,10 +46,16 @@ public class Money {
             throw new NegativeAmountException(this.amount-money.getAmount());
         }
         this.amount -= money.getAmount();
+        if(Currency.valueOf(this.currency) != null){
+            this.amount = Math.round(this.amount * 100)/100;
+        }
     }
 
-    // 소숫점 둘째짜리까지 반올림
-    public void roundAmount() {
+    public void setCurrency(String currency){
+        this.currency = currency;
+    }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }
