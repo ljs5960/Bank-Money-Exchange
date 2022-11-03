@@ -10,10 +10,12 @@ public class Money {
     private final String currency;
 
     public Money(double amount, String currency) {
+        try {
+            Currency.valueOf(currency);
+        } catch (IllegalArgumentException e) {
+            throw new IncorrectCurrencyException(currency);
+        }
         this.amount = amount;
-//        if(Currency.values()){
-//            throw new IncorrectCurrencyException(currency);
-//        }
         this.currency = currency;
     }
 
@@ -41,5 +43,10 @@ public class Money {
             throw new NegativeAmountException(this.amount-money.getAmount());
         }
         this.amount -= money.getAmount();
+    }
+
+    // 소숫점 둘째짜리까지 반올림
+    public void roundAmount() {
+
     }
 }

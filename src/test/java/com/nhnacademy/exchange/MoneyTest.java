@@ -62,7 +62,7 @@ class MoneyTest {
     }
 
     /*
-   다른 통화의 돈을 뺏을 때 NoMatchCurrencyException 발생
+    다른 통화의 돈을 뺏을 때 NoMatchCurrencyException 발생
     */
     @Test
     void check_subAmount_NotEqualCurrency_ThenthrowNoMatchCurrencyException() {
@@ -100,6 +100,9 @@ class MoneyTest {
         assertThat(money1.getCurrency().equals(money2.getCurrency()));
     }
 
+    /*
+    같은 달러의 돈을 더했을 때 값이 일치하는 경우
+     */
     @Test
     void check_addAmount_equal_dollar(){
         Money money1 = new Money(1000.0, "dollar");
@@ -109,6 +112,9 @@ class MoneyTest {
         assertThat(money1.getAmount()).isEqualTo(2000.0);
     }
 
+    /*
+    같은 달러의 돈을 뺐을 때 값이 일치하는 경우
+    */
     @Test
     void check_subAmount_equal_dollar() {
         Money money1 = new Money(1000.0, "won");
@@ -118,12 +124,25 @@ class MoneyTest {
         assertThat(money1.getAmount()).isEqualTo(500);
     }
 
+    /*
+    잘못된 통화를 입력했을 경우
+     */
     @Test
     void check_IncorrectCurrency(){
-        Money money = new Money(1000.0, "wonn");
-
-        assertThatThrownBy((ThrowableAssert.ThrowingCallable) new Money(1000.0, "wonn"))
+        assertThatThrownBy(() -> new Money(1000.0, "wonn"))
                 .isInstanceOf(IncorrectCurrencyException.class)
                 .hasMessageContainingAll("Incorrect Currency : ", "wonn");
+    }
+
+    /*
+    달러의 경우 소숫점 둘째자리까지 표현
+     */
+    @Test
+    void check_dollar_decimalPoint_Round() {
+        Money money1 = new Money(10.00, "dollar");
+        Money money2 = new Money(9.001, "dollar");
+
+        money1.subAmount(money2);
+        assertThat(money1.getAmount()).isEqualTo(1);
     }
 }
