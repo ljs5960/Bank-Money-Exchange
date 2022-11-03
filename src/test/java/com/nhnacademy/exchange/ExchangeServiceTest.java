@@ -43,6 +43,13 @@ class ExchangeServiceTest {
         exchangeService.exchange(money);
         assertThat(money.getAmount()).isEqualTo(10);
         assertThat(money.getCurrency()).isEqualTo("won");
+
+        money = new Money(0.001, "dollar");
+
+        exchangeService.exchange(money);
+        assertThat(money.getAmount()).isEqualTo(0);
+        assertThat(money.getCurrency()).isEqualTo("won");
+
     }
 
     /*
@@ -55,5 +62,11 @@ class ExchangeServiceTest {
         exchangeService.exchange(money);
         assertThat(money.getAmount()).isEqualTo(0.01);
         assertThat(money.getCurrency()).isEqualTo("dollar");
+
+        money = new Money(4, "won");
+        exchangeService.exchange(money);
+        assertThat(money.getAmount()).isEqualTo(0.00);
+        assertThat(money.getCurrency()).isEqualTo("dollar");
+
     }
 }
